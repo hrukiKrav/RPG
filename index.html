@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORGANIZAÇÃO KRAV • Arquivo Confidencial • Sigilo Absoluto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blood-red: #8B0000;
+            --aged-gold: #C5A572;
+            --aged-silver: #A8A8A8;
+            --dark-leather: #050505;
+            --parchment-dark: #0F0D0A;
+        }
+        
+        body {
+            background-color: #050505;
+            color: #E8E4D9;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.75;
+        }
+        
+        .gothic-title {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        
+        .cinzel {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+        }
+        
+        .book-page {
+            background-color: #0A0907;
+            border: 1px solid #3A2F2A;
+            box-shadow: 
+                0 0 0 1px #2A211C,
+                0 25px 50px -12px rgb(0 0 0 / 0.6),
+                inset 0 0 80px rgba(0,0,0,0.7);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 30% 20%, rgba(139,0,0,0.015) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(139,0,0,0.01) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .ornate-border {
+            border-image: linear-gradient(to right, #3A2F2A, #C5A572, #3A2F2A) 1;
+            border-width: 1px;
+            border-style: solid;
+        }
+        
+        .gothic-border {
+            position: relative;
+        }
+        
+        .gothic-border::before,
+        .gothic-border::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #C5A572;
+            opacity: 0.4;
+        }
+        @media (min-width: 768px) {
+            .gothic-border::before,
+            .gothic-border::after {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        .gothic-border::before {
+            top: -1px;
+            left: -1px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .gothic-border::after {
+            bottom: -1px;
+            right: -1px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.5rem;
+            line-height: 0.85;
+            padding-right: 8px;
+            padding-top: 4px;
+            color: #8B0000;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 12px rgba(139, 0, 0, 0.6);
+            font-weight: 700;
+        }
+        @media (min-width: 768px) {
+            .drop-cap::first-letter {
+                font-size: 5.2rem;
+                padding-right: 12px;
+                padding-top: 8px;
+            }
+        }
+        
+        .section-header {
+            font-family: 'Cinzel', serif;
+            color: #C5A572;
+            text-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+            letter-spacing: 0.18em;
+        }
+        @media (min-width: 768px) {
+            .section-header {
+                letter-spacing: 6px;
+            }
+        }
+        
+        .sub-header {
+            font-family: 'Cinzel', serif;
+            color: #A8A8A8;
+            letter-spacing: 3px;
+            border-bottom: 1px solid #3A2F2A;
+            padding-bottom: 8px;
+        }
+        
+        .ornate-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 2rem 0;
+        }
+        
+        .ornate-divider::before,
+        .ornate-divider::after {
+            content: '';
+            height: 1px;
+            width: 40px;
+            background: linear-gradient(to right, transparent, #C5A572, transparent);
+        }
+        @media (min-width: 768px) {
+            .ornate-divider::before,
+            .ornate-divider::after {
+                width: 80px;
+            }
+        }
+        
+        .quote-box {
+            background-color: #11100E;
+            border-left: 4px solid #8B0000;
+            border-image: linear-gradient(#8B0000, #4A0E0E) 1;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .quote-box::before {
+            content: '❦';
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            font-size: 1.5rem;
+            color: #C5A572;
+            opacity: 0.6;
+        }
+        @media (min-width: 768px) {
+            .quote-box::before {
+                left: 24px;
+                font-size: 1.75rem;
+            }
+        }
+        
+        .classification-bar {
+            background: linear-gradient(to right, #1A120F, #050505, #1A120F);
+            border-bottom: 1px solid #4A0E0E;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+        }
+        
+        .demon-symbol {
+            filter: drop-shadow(0 0 4px rgba(139,0,0,0.4));
+        }
+        
+        .luxury-text {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+        
+        .red-glow {
+            text-shadow: 
+                0 0 8px rgba(139, 0, 0, 0.7),
+                0 0 16px rgba(139, 0, 0, 0.4);
+        }
+        
+        .chapter-page {
+            box-shadow: 
+                0 10px 15px -3px rgb(0 0 0 / 0.5),
+                0 4px 6px -4px rgb(0 0 0 / 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+        
+        .manuscript {
+            font-family: 'Cormorant Garamond', serif;
+            background-image: 
+                linear-gradient(#0F0D0A 0%, #0A0907 100%);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.8);
+        }
+        
+        .nav-link {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:hover {
+            color: #C5A572;
+            text-shadow: 0 0 8px rgba(197, 165, 114, 0.5);
+        }
+        
+        .stamp {
+            transform: rotate(-8deg);
+            border: 2px solid #8B0000;
+            color: #8B0000;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 3px;
+            box-shadow: 0 0 0 1px #050505;
+        }
+        
+        .page-footer {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: #6B5F54;
+        }
+        @media (min-width: 768px) {
+            .page-footer {
+                font-size: 0.75rem;
+            }
+        }
+        
+        .occult-bg {
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill-rule='evenodd'%3E%3Cpath d='M60 10 L70 30 L95 25 L80 50 L100 70 L75 75 L70 100 L50 85 L25 95 L35 70 L10 55 L35 45 Z' fill='%233A2F2A' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 5 L50 25 L75 20 L60 45 L70 65 L45 60 L40 80 L30 55 L10 60 L25 40 L5 25 L30 20 Z' fill='%233A2F2A' fill-opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 140px 140px, 95px 95px;
+            background-position: 0 0, 45px 60px;
+            opacity: 0.9;
+        }
+        
+        .leather-texture {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.015) 0%, transparent 50%),
+                linear-gradient(135deg, #050505 0%, #0A0907 50%, #050505 100%);
+        }
+        
+        .content-text p {
+            margin-bottom: 1.25rem;
+            text-align: justify;
+        }
+        
+        .content-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .cinematic-cover {
+            background: 
+                linear-gradient(rgba(5,5,5,0.65), rgba(5,5,5,0.75)),
+                radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.4) 80%);
+        }
+        
+        .elegant-shadow {
+            text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+        }
+
+        .login-panel {
+            background: linear-gradient(135deg, rgba(10,9,7,0.96), rgba(17,16,14,0.95));
+            border: 1px solid rgba(197, 165, 114, 0.25);
+            box-shadow: 0 0 0 1px rgba(139, 0, 0, 0.15), 0 20px 50px rgba(0,0,0,0.45);
+            backdrop-filter: blur(8px);
+        }
+
+        .login-input {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(197, 165, 114, 0.2);
+            color: #F5EDE0;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .login-input:focus {
+            border-color: #8B0000;
+            box-shadow: 0 0 0 1px rgba(139,0,0,0.35);
+        }
+
+        .access-badge {
+            border: 1px solid rgba(197, 165, 114, 0.25);
+            background: rgba(139, 0, 0, 0.08);
+            color: #C5A572;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Classification Bar (Ajustado para Mobile) -->
+    <div class="classification-bar sticky top-0 z-50 py-2 md:py-3 px-4 md:px-6 flex flex-col md:flex-row items-center justify-between text-[10px] md:text-xs tracking-[2px] md:tracking-[4px] gap-2 md:gap-0">
+        <div class="flex items-center gap-x-2 md:gap-x-3 w-full md:w-auto justify-between md:justify-start">
+            <div class="flex items-center gap-x-2">
+                <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#8B0000] rounded-full animate-pulse"></div>
+                <span class="text-[#8B0000] font-bold cinzel">SIGILO ABSOLUTO</span>
+            </div>
+            <div class="hidden md:block h-3 w-px bg-[#3A2F2A]"></div>
+            <span class="text-[#A8A8A8] font-medium hidden sm:inline-block">ACESSO À ALTA CÚPULA</span>
+        </div>
+        <div class="flex items-center gap-x-4 text-[#6B5F54] w-full md:w-auto justify-between md:justify-end">
+            <span class="cinzel hidden sm:inline-block">MOROZOVA • KRAV • 1886</span>
+            <div class="px-2 md:px-3 py-0.5 border border-[#4A0E0E] text-[9px] md:text-[10px]">DOC 001-A</div>
+        </div>
+    </div>
+
+    <!-- COVER / CAPA CINEMATOGRÁFICA -->
+    <div class="min-h-[100dvh] flex items-center justify-center relative overflow-hidden leather-texture px-3 sm:px-4 py-6 sm:py-8">
+        <div class="absolute inset-0 occult-bg"></div>
+        
+        <div class="absolute inset-0 flex items-center justify-center opacity-[0.07] pointer-events-none">
+        </div>
+
+        <div class="relative z-10 w-full max-w-6xl grid gap-4 sm:gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center auto-rows-max lg:auto-rows-auto">
+            <div class="text-center lg:text-left w-full">
+                <div class="inline-block mb-4 sm:mb-6 md:mb-8">
+                    <div class="stamp px-4 sm:px-6 md:px-8 py-1 sm:py-1.5 text-[9px] sm:text-xs md:text-sm font-bold tracking-[2px] sm:tracking-[3px] md:tracking-[5px] inline-flex items-center gap-x-2">
+                        <span>CLASSIFICADO</span>
+                        <span class="text-[7px] sm:text-[8px] md:text-[10px] opacity-70">NÍVEL Ω</span>
+                    </div>
+                </div>
+
+                <div class="mb-4 sm:mb-6">
+                    <div class="flex justify-center lg:justify-start mb-3 sm:mb-4 hidden sm:flex">
+                        <div class="flex items-center gap-x-2 sm:gap-x-4">
+                            <div class="h-px w-4 sm:w-8 md:w-12 bg-gradient-to-r from-transparent to-[#C5A572]"></div>
+                            <span class="text-[#C5A572] text-[8px] sm:text-[10px] md:text-xs tracking-[3px] sm:tracking-[4px] md:tracking-[6px] font-medium cinzel">ORGANIZAÇÃO</span>
+                            <div class="h-px w-4 sm:w-8 md:w-12 bg-gradient-to-l from-transparent to-[#C5A572]"></div>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-5xl sm:text-7xl md:text-[92px] lg:text-[110px] leading-[0.85] sm:leading-[0.82] font-bold tracking-[-1px] sm:tracking-[-2px] md:tracking-[-4.5px] text-white elegant-shadow cinzel break-words">
+                        KRAV
+                    </h1>
+                    <p class="text-sm sm:text-xl md:text-3xl text-[#C5A572] mt-2 sm:mt-2 md:mt-3 tracking-[3px] sm:tracking-[4px] md:tracking-[8px] font-light">ARQUIVO CONFIDENCIAL</p>
+                </div>
+
+                <div class="max-w-2xl lg:max-w-none mx-auto lg:mx-0 my-4 sm:my-6 md:my-8 lg:my-10 px-1 sm:px-2 lg:px-0">
+                    <p class="text-xs sm:text-lg md:text-xl lg:text-[27px] leading-tight sm:leading-snug tracking-[-0.3px] text-[#E8E4D9] font-light">
+                        &ldquo;O mundo nunca pertenceu aos mais fortes...<br class='hidden sm:block' />
+                        <span class="text-[#C5A572]">apenas aos que controlam aquilo que ninguém consegue enxergar.</span>&rdquo;
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap justify-center lg:justify-start items-center gap-1.5 sm:gap-2 md:gap-x-4 text-[8px] sm:text-[10px] md:text-xs tracking-[1.5px] sm:tracking-[2px] md:tracking-[3px] text-[#6B5F54] mb-4 sm:mb-6 md:mb-8">
+                    <div>A LOBA</div>
+                    <div class="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#6B5F54] rounded-full hidden sm:block"></div>
+                    <div>O URSO</div>
+                    <div class="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#6B5F54] rounded-full hidden sm:block"></div>
+                    <div>O DRAGÃO</div>
+                </div>
+            </div>
+
+            <div class="login-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 w-full max-w-xl mx-auto lg:mx-0">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <div>
+                        <p class="text-[9px] sm:text-[10px] md:text-xs tracking-[3px] sm:tracking-[4px] text-[#8B0000] cinzel">ACESSO RESTRITO</p>
+                        <h2 class="text-lg sm:text-2xl md:text-3xl text-[#C5A572] cinzel mt-1">Portal Confidencial</h2>
+                    </div>
+                    <div class="access-badge rounded-lg px-5 sm:px-6 py-1.5 sm:py-2 text-[8px] sm:text-[10px] md:text-xs tracking-[2.5px] sm:tracking-[3px] cinzel whitespace-nowrap">NÍVEL Ω</div>
+                </div>
+
+                <div class="space-y-3 sm:space-y-4">
+                    <label class="block text-left">
+                        <span class="block text-[9px] sm:text-[10px] md:text-xs tracking-[2.5px] sm:tracking-[3px] text-[#A8A8A8] uppercase mb-1.5 sm:mb-2">Credencial</span>
+                        <input type="text" value="MOROZOVA / KRAV" class="login-input w-full rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm md:text-base" />
+                    </label>
+                    <label class="block text-left">
+                        <span class="block text-[9px] sm:text-[10px] md:text-xs tracking-[2.5px] sm:tracking-[3px] text-[#A8A8A8] uppercase mb-1.5 sm:mb-2">Chave de Acesso</span>
+                        <input type="password" value="••••••••" class="login-input w-full rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm md:text-base" />
+                    </label>
+                </div>
+
+                <div class="mt-4 sm:mt-6 flex flex-col items-center justify-center gap-3 text-[9px] sm:text-[10px] md:text-xs text-[#6B5F54]">
+                    <span class="text-center sm:text-left">Autorização: <span class="text-[#C5A572]">Alta Cúpula</span></span>
+                    <button onclick="document.getElementById('toc').scrollIntoView({ behavior: 'smooth' })" class="w-full inline-flex items-center justify-center gap-x-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border border-[#3A2F2A] hover:border-[#C5A572] transition-all text-[10px] sm:text-[11px] md:text-sm tracking-[2.5px] sm:tracking-[3px] hover:text-[#C5A572]">
+                        <span>ENTRAR</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at center, transparent 55%, rgba(5,5,5,0.75) 90%);"></div>
+    </div>
+
+    <!-- TABLE OF CONTENTS / SUMÁRIO -->
+    <div id="toc" class="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12">
+        <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 sm:mb-8 gap-3 sm:gap-4">
+            <div>
+                <span class="text-[#8B0000] text-[9px] sm:text-[10px] md:text-xs tracking-[3px] sm:tracking-[4px] cinzel">DOCUMENTO CONFIDENCIAL</span>
+                <h2 class="section-header text-3xl sm:text-4xl md:text-6xl tracking-[1.5px] sm:tracking-[2px] mt-1">Sumário</h2>
+            </div>
+            <div class="text-left sm:text-right text-[9px] sm:text-[10px] md:text-xs text-[#6B5F54]">
+                <div>EDIÇÃO RESTRITA</div>
+                <div class="text-[#8B0000]">Organização krav</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-x-12 md:gap-y-6 text-sm sm:text-base md:text-lg">
+            <a href="#origem" class="nav-link flex items-center justify-between group border-b border-[#2A211C] pb-2 sm:pb-3 md:pb-4">
+                <div class="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4">
+                    <span class="text-[#C5A572] font-bold text-base sm:text-lg md:text-xl w-5 sm:w-6 md:w-8">I</span>
+                    <span class="group-hover:text-[#C5A572] transition text-xs sm:text-sm md:text-base">ORIGEM</span>
+                </div>
+                <span class="text-[8px] sm:text-[10px] md:text-xs text-[#6B5F54] group-hover:text-[#8B0000]">PÁG. I</span>
+            </a>
+            
+            <a href="#atuacao" class="nav-link flex items-center justify-between group border-b border-[#2A211C] pb-2 sm:pb-3 md:pb-4">
+                <div class="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4">
+                    <span class="text-[#C5A572] font-bold text-base sm:text-lg md:text-xl w-5 sm:w-6 md:w-8">II</span>
+                    <span class="group-hover:text-[#C5A572] transition text-xs sm:text-sm md:text-base">ATUAÇÃO</span>
+                </div>
+                <span class="text-[8px] sm:text-[10px] md:text-xs text-[#6B5F54] group-hover:text-[#8B0000]">PÁG. III</span>
+            </a>
+            
+            <a href="#suborganizacoes" class="nav-link flex items-center justify-between group border-b border-[#2A211C] pb-2 sm:pb-3 md:pb-4">
+                <div class="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4">
+                    <span class="text-[#C5A572] font-bold text-base sm:text-lg md:text-xl w-5 sm:w-6 md:w-8">III</span>
+                    <span class="group-hover:text-[#C5A572] transition text-xs sm:text-sm md:text-base">SUB-ORGANIZAÇÕES</span>
+                </div>
+                <span class="text-[8px] sm:text-[10px] md:text-xs text-[#6B5F54] group-hover:text-[#8B0000]">PÁG. V</span>
+            </a>
+            
+            <a href="#cargos" class="nav-link flex items-center justify-between group border-b border-[#2A211C] pb-2 sm:pb-3 md:pb-4">
+                <div class="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4">
+                    <span class="text-[#C5A572] font-bold text-base sm:text-lg md:text-xl w-5 sm:w-6 md:w-8">IV</span>
+                    <span class="group-hover:text-[#C5A572] transition text-xs sm:text-sm md:text-base">CARGOS ATUAIS</span>
+                </div>
+                <span class="text-[8px] sm:text-[10px] md:text-xs text-[#6B5F54] group-hover:text-[#8B0000]">PÁG. IX</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- CAPÍTULO I: ORIGEM -->
+    <div id="origem" class="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 pb-8 sm:pb-12 md:pb-20">
+        <div class="book-page chapter-page p-4 sm:p-6 md:p-10 lg:p-16 gothic-border ornate-border manuscript">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-3 sm:gap-4">
+                <div>
+                    <div class="flex items-center gap-x-2 sm:gap-x-3">
+                        <div>
+                            <span class="text-[9px] sm:text-[10px] md:text-xs text-[#8B0000] tracking-[3px] sm:tracking-[4px]">CAPÍTULO I</span>
+                            <h3 class="section-header text-2xl sm:text-4xl md:text-6xl -mt-0.5 sm:-mt-1 md:-mt-2">Origem</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-text text-sm sm:text-base md:text-[17.2px] leading-relaxed md:leading-[1.82] text-[#D9D4C8]">
+                <p class="drop-cap">A origem da Organização Krav se deu pela criação de Hunter Krav, que desenvolveu fórmulas para drogas utilizando ingredientes demoníacos. Essas fórmulas induziam nos humanos estados de crescente excitação e êxtase, sendo conhecidas internamente como a fórmula da felicidade. O processo de produção foi expandido de forma controlada, e Hunter uniu-se ao irmão gêmeo, Jasper Krav, para estruturar a organização como um todo.</p>
+                
+                <p>A principal fachada escolhida foi uma indústria química, que permitia o transporte de matéria-prima por todo o mundo sob aparência legítima, servindo simultaneamente como canal de distribuição dos produtos da organização. O cheiro de solventes e reagentes se misturava ao aroma sutil de incenso queimado em rituais noturnos, criando uma atmosfera única nos laboratórios ocultos sob as instalações industriais.</p>
+                
+                <p>Para conseguir aliados fiéis em posições estratégicas, Hunter utilizou seu poder e influência infernal. Ela criou uma fórmula de nome desconhecido, diferente da fórmula da felicidade, projetada especificamente para integrar pessoas altamente influentes na mídia e na política. Essa fórmula garantia que a organização obtivesse aprovações necessárias, proteção legal e visibilidade pública nos mercados onde pretendia atuar, sem que os aliados percebessem a extensão do controle exercido sobre eles.</p>
+                
+                <div class="quote-box p-5 md:p-8 my-8 md:my-10 text-[#C9B89A]">
+                    <p class="text-lg md:text-xl">"O poder verdadeiro não se exibe. Ele se infiltra nas veias da sociedade como uma toxina doce, até que o corpo inteiro pertença a quem o administrou."</p>
+                    <p class="text-right text-[10px] md:text-xs mt-4 text-[#8B0000] tracking-widest">— Hunter Krav Morozova</p>
+                </div>
+                
+                <p>Com essa rede de conexões e pessoas mantidas próximas por meio de estratégia, Hunter permaneceu na linha de frente do setor administrativo. Sua função incluía a eliminação de concorrências de maneira sutil, utilizando pressão política, econômica e influência infernal para enfraquecer rivais sem exposição direta. O peso das decisões recaía sobre seus ombros como uma capa de veludo negro — elegante, mas sufocante.</p>
+                
+                <p>Jasper Krav, seu irmão gêmeo, assumiu o papel de executor operacional. Ele era responsável por sujar as mãos e fazer os obstáculos desaparecerem, mesmo quando esses obstáculos eram organizações ou famílias inteiras. Jasper não deixava erros ou pontas soltas. Sua atuação precisa e implacável fundou a reputação da organização como uma força que não tolerava oposição e, até os dias atuais, ele continua comandando as operações de campo.</p>
+                
+                <p>Quando ainda era vivo, Jason Roux Gagnon cuidava da parte sobrenatural da entidade, ocupando o posto de Rei Infernal. Ele supervisionava os aspectos demoníacos e os pactos que sustentavam o poder da organização além do plano físico. Após a descoberta de uma traição por parte de Jason, Hunter confrontou-o e assumiu o título de Rainha Infernal. O título de Rei Infernal foi transferido, e Jason Roux Gagnon faleceu durante o evento. A partir desse momento, o controle completo sobre o poder infernal passou para Hunter, que integrou definitivamente os elementos sobrenaturais à estrutura administrativa e operacional da máfia.</p>
+            </div>
+
+            <div class="page-footer flex flex-col sm:flex-row items-center sm:justify-between pt-3 sm:pt-4 border-t border-[#2A211C] gap-2 text-[8px] sm:text-[9px] md:text-[10px]">
+                <div class="flex items-center gap-x-2">
+                    <span>ORGANIZAÇÃO KRAV</span>
+                </div>
+                <span class="cinzel tracking-[1.5px] sm:tracking-[2px]">PÁGINA I</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAPÍTULO II: ATUAÇÃO -->
+    <div id="atuacao" class="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 pb-8 sm:pb-12 md:pb-20">
+        <div class="book-page chapter-page p-4 sm:p-6 md:p-10 lg:p-16 gothic-border ornate-border manuscript">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-3 sm:gap-4">
+                <div>
+                    <div class="flex items-center gap-x-2 sm:gap-x-3">
+                        <div>
+                            <span class="text-[9px] sm:text-[10px] md:text-xs text-[#8B0000] tracking-[3px] sm:tracking-[4px]">CAPÍTULO II</span>
+                            <h3 class="section-header text-2xl sm:text-4xl md:text-6xl -mt-0.5 sm:-mt-1 md:-mt-2">Atuação</h3>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+
+            <div class="content-text text-sm sm:text-base md:text-[17.2px] leading-relaxed md:leading-[1.82] text-[#D9D4C8]">
+                <p class="drop-cap">A Organização Krav atua nas principais redes de tráfico de drogas de todo o mundo. Possui sistema próprio de transporte, guarda mercenária treinada e produtos de criação própria que estão ligados às maiores potências do mundo. Na Rússia, considerada o país matriz, uma monarquia secreta comanda o maior governo do país. Todas as decisões de grande porte são tomadas por baixo dos panos, sob a supervisão e aprovação direta dos gêmeos Krav.</p>
+                
+                <p>A organização também exerce os principais poderes sobre o submundo do crime russo, controlando rotas, territórios e fluxos de dinheiro. O frio cortante das noites moscovitas parecia penetrar nas paredes dos escritórios ocultos, onde mapas de rotas eram marcados com sangue seco e cera preta. Cada território conquistado carregava o peso de promessas quebradas e lealdades compradas com a fórmula da felicidade.</p>
+                
+                <p>A área de atuação se expande principalmente pelo Japão, Estados Unidos, França, Alemanha e, com foco principal, na Rússia. Embora a organização ainda enfrente resistência de máfias locais em alguns territórios, a estratégia adotada nunca foi a de extinguir completamente a concorrência. Em vez disso, a liderança optou por dominar os grupos rivais e transformá-los em sub-organizações.</p>
+            </div>
+
+            <div class="page-footer flex flex-col sm:flex-row items-center sm:justify-between pt-3 sm:pt-4 border-t border-[#2A211C] gap-2 text-[8px] sm:text-[9px] md:text-[10px]">
+                <div class="flex items-center gap-x-2">
+                    <span>ORGANIZAÇÃO KRAV</span>
+                </div>
+                <span class="cinzel tracking-[1.5px] sm:tracking-[2px]">PÁGINA III</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAPÍTULO III: SUB-ORGANIZAÇÕES -->
+    <div id="suborganizacoes" class="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 pb-8 sm:pb-12 md:pb-20">
+        <div class="book-page chapter-page p-4 sm:p-6 md:p-10 lg:p-16 gothic-border ornate-border manuscript">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-3 sm:gap-4">
+                <div>
+                    <div class="flex items-center gap-x-2 sm:gap-x-3">
+                        <div>
+                            <span class="text-[9px] sm:text-[10px] md:text-xs text-[#8B0000] tracking-[3px] sm:tracking-[4px]">CAPÍTULO III</span>
+                            <h3 class="section-header text-2xl sm:text-4xl md:text-6xl -mt-0.5 sm:-mt-1 md:-mt-2">Sub-organizações</h3>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+            
+               <div class="my-6 md:my-8 pl-4 md:pl-6 border-l-2 border-[#4A0E0E] min-h-[80px]">
+                    <p class="text-[#A8A8A8] text-[10px] md:text-sm tracking-widest">SUB-ORGANIZAÇÃO • JAPÃO</p>
+                    <p class="font-medium text-lg md:text-xl text-[#C5A572]">INAGAWA-KAI</p>
+                    <p class="text-xs md:text-sm mt-1">Distribuição em cassinos • Lavagem de dinheiro</p>
+                </div>
+
+                <p>A Inagawa-kai, no Japão, é o maior sub-grupo criminoso da organização e concentra suas atividades na região de Kanto, especialmente em Tóquio. Historicamente conhecida pelo controle de jogos de azar, foi integrada à rede da Organização Krav após um processo de dominação que combinou pressão operacional e influência política. Atualmente, a Inagawa-kai serve como ramificação especializada em distribuição da fórmula da felicidade em cassinos e estabelecimentos de apostas, além de atuar como canal de lavagem de dinheiro proveniente de outras operações da organização na Ásia. O ar denso dos cassinos de Tóquio, iluminados por lanternas vermelhas que refletiam em mesas de laca preta, escondia sob o barulho das fichas o fluxo constante da fórmula da felicidade. Os clientes sorriam com um êxtase que ia além da sorte — eles sorriam porque seus corpos já pertenciam à Krav sem saber.</p> 
+    
+               <div class="my-6 md:my-8 pl-4 md:pl-6 border-l-2 border-[#4A0E0E] min-h-[80px]">
+                    <p class="text-[#A8A8A8] text-[10px] md:text-sm tracking-widest">SUB-ORGANIZAÇÃO • FRANÇA</p>
+                    <p class="font-medium text-lg md:text-xl text-[#C5A572]">MÁFIA CORSA</p>
+                    <p class="text-xs md:text-sm mt-1">Logística marítima • Proteção de rotas europeias</p>
+                </div>
+                
+                <p>A Máfia Corsa, na França, é composta por facções criminosas originárias da Córsega. Tradicionalmente atuava com extorsão, lavagem de dinheiro e controle de portos. Após a integração à Organização Krav, passou a funcionar como estrutura logística para o transporte marítimo de mercadorias entre a Europa e outros continentes. Seus métodos de extorsão foram adaptados para proteger rotas e interesses da matriz, enquanto a lavagem de dinheiro agora atende às necessidades financeiras globais da organização.</p>
+            
+               <div class="my-6 md:my-8 pl-4 md:pl-6 border-l-2 border-[#4A0E0E] min-h-[80px]">
+                    <p class="text-[#A8A8A8] text-[10px] md:text-sm tracking-widest">SUB-ORGANIZAÇÃO • ESTADOS UNIDOS</p>
+                    <p class="font-medium text-lg md:text-xl text-[#C5A572]">FAMÍLIA GAMBINO</p>
+                    <p class="text-xs md:text-sm mt-1">Construção civil • Fachadas e armazenamento</p>
+                </div>
+                
+                <p>A Família Gambino, nos Estados Unidos, é conhecida na cultura pop devido ao antigo chefe John Gotti. Mantém forte presença no setor de construção e em esquemas de extorsão. Integrada à rede da Krav, fornece fachadas legítimas para a construção de instalações seguras, laboratórios e pontos de armazenamento. A extorsão é utilizada para garantir proteção em territórios controlados e para influenciar contratos públicos e privados que beneficiam indiretamente a organização.</p>
+                
+               
+               <div class="my-6 md:my-8 pl-4 md:pl-6 border-l-2 border-[#4A0E0E] min-h-[80px]">
+                    <p class="text-[#A8A8A8] text-[10px] md:text-sm tracking-widest">SUB-ORGANIZAÇÃO • ALEMANHA</p>
+                    <p class="font-medium text-lg md:text-xl text-[#C5A572]">HELLS ANGELS</p>
+                    <p class="text-xs md:text-sm mt-1">Entretenimento noturno • Tráfico de armas</p>
+                </div>
+                
+                <p>Os Hells Angels, na Alemanha, controlam redes de prostituição e segurança privada em distritos de entretenimento noturno, além do tráfico internacional de armas de fogo. Após a dominação pela Organização Krav, tornaram-se responsáveis pela proteção de pontos de distribuição da fórmula da felicidade em ambientes noturnos e pelo fornecimento de armamento para a guarda mercenária da matriz. Sua estrutura de motoclube continua sendo utilizada como fachada para operações de segurança e coleta de informações.</p>
+              
+                  
+               <div class="my-6 md:my-8 pl-4 md:pl-6 border-l-2 border-[#4A0E0E] min-h-[80px]">
+                    <p class="text-[#A8A8A8] text-[10px] md:text-sm tracking-widest">SUB-ORGANIZAÇÃO • RÚSSIA</p>
+                    <p class="font-medium text-lg md:text-xl text-[#C5A572]">BRATVA</p>
+                    <p class="text-xs md:text-sm mt-1">Produção global • Política</p>
+                </div>
+                
+                <p>A Bratva, conhecida internamente como Irmandade, é a principal matriz da Organização Krav. Trata-se de uma rede descentralizada de sindicatos criminosos altamente sofisticados. Sua atividade principal é a manipulação dos poderes políticos russos e a produção de drogas de alta pureza em nível global. A Bratva também exerce influência significativa no tráfico de joias preciosas e itens de alto valor que circulam no mercado negro. Todas as outras sub-organizações reportam-se, direta ou indiretamente, à liderança da Bratva, que responde aos gêmeos Krav.</p>
+            </div>
+
+            <div class="page-footer flex flex-col sm:flex-row items-center sm:justify-between pt-3 sm:pt-4 border-t border-[#2A211C] gap-2 text-[8px] sm:text-[9px] md:text-[10px]">
+                <div class="flex items-center gap-x-2">
+                    <span>ORGANIZAÇÃO KRAV</span>
+                </div>
+                <span class="cinzel tracking-[1.5px] sm:tracking-[2px]">PÁGINA V</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAPÍTULO IV: CARGOS ATUAIS -->
+    <div id="cargos" class="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 pb-8 sm:pb-12 md:pb-16">
+        <div class="book-page chapter-page p-4 sm:p-6 md:p-10 lg:p-16 gothic-border ornate-border manuscript">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-3 sm:gap-4">
+                <div>
+                    <div class="flex items-center gap-x-2 sm:gap-x-3">
+                        <div>
+                            <span class="text-[9px] sm:text-[10px] md:text-xs text-[#8B0000] tracking-[3px] sm:tracking-[4px]">CAPÍTULO IV</span>
+                            <h3 class="section-header text-2xl sm:text-4xl md:text-6xl -mt-0.5 sm:-mt-1 md:-mt-2">Cargos ocupados na atualidade.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+     
+                <div class="my-4 sm:my-6 md:my-8 p-3 sm:p-4 md:p-6 bg-[#11100E] border border-[#3A2F2A]">
+                    <div class="flex items-start gap-x-3 sm:gap-x-4">
+                        <div>
+                            <p class="text-[#C5A572] text-[9px] sm:text-[10px] md:text-sm tracking-[2.5px] sm:tracking-[3px]">CARGO SUPREMO</p>
+                            <p class="text-base sm:text-xl md:text-2xl font-medium text-white break-words">RAINHA INFERNAL</p>
+                            <p class="text-[#A8A8A8] mt-1 text-xs sm:text-sm md:text-base">Hunter Krav Morozova</p>
+                            <p class="text-[8px] sm:text-[9px] md:text-xs mt-2 sm:mt-3 text-[#8B0000]">DEMÔNIO DO TORMENTO • CEO</p>
+                        </div>
+                    </div>
+                </div>
+                
+            <div class="content-text text-sm sm:text-base md:text-[17.2px] leading-relaxed md:leading-[1.82] text-[#D9D4C8]">
+                <p class="drop-cap">Hunter Krav Morozova ocupa o cargo de Rainha Infernal, CEO da Organização Krav e Demônio do Tormento. Ela é responsável pela visão estratégica de longo prazo, pela supervisão das relações com aliados políticos e midiáticos, e pelo uso do poder infernal para manter a coesão interna e eliminar ameaças de alto nível. Sua posição combina autoridade administrativa com o domínio completo sobre os aspectos demoníacos da organização, herdados após a traição de Jason Roux Gagnon.</p>
+                
+                <p>O peso da coroa infernal não era visível aos olhos comuns. Hunter carregava-o nos ombros como uma segunda pele — fria, pesada, inescapável. Cada decisão que tomava ecoava através de continentes, através de almas. O brilho discreto de seus olhos vermelhos sob a luz baixa dos escritórios de Moscou revelava apenas uma fração do poder que pulsava em suas veias.</p>
+           
+                
+                               <div class="my-6 md:my-8 p-4 md:p-6 bg-[#11100E] border border-[#3A2F2A]">
+                    <div class="flex items-start gap-x-4">
+                        <div>
+                            <p class="text-[#C5A572] text-[10px] md:text-sm tracking-[3px]">CARGO EXECUTIVO</p>
+                            <p class="text-xl md:text-2xl font-medium text-white break-words">PRÍNCIPE INFERNAL</p>
+                            <p class="text-[#A8A8A8] mt-1 text-sm md:text-base">Jasper Krav Morozova</p>
+                            <p class="text-[10px] md:text-xs mt-3 text-[#8B0000]">DEMÔNIO DA FÚRIA • EXECUTOR</p>
+                              </div>
+                    </div>
+                </div>
+                
+                <p>Jasper Krav Morozova ocupa o cargo de Príncipe Infernal, sócio majoritário da Organização Krav, executor principal e Demônio da Fúria. Ele comanda as operações de campo, a eliminação de obstáculos e a manutenção da disciplina entre as sub-organizações. Sua atuação é caracterizada pela precisão absoluta e pela ausência de erros, garantindo que nenhuma ameaça à organização permaneça por tempo suficiente para se tornar um problema real.</p>
+                
+                <p>Seus punhos eram as ferramentas mais letais da organização. Não por força bruta — embora ele a possuísse em abundância —, mas pela capacidade de transformar qualquer obstáculo em poeira antes mesmo que o inimigo percebesse o golpe. O cheiro de pólvora e sangue seco impregnava suas roupas quando retornava das operações noturnas.</p>
+                
+                
+                               <div class="my-6 md:my-8 p-4 md:p-6 bg-[#11100E] border border-[#3A2F2A]">
+                    <div class="flex items-start gap-x-4">
+                        <div>
+                            <p class="text-[#C5A572] text-[10px] md:text-sm tracking-[3px]">O REI TRAIDOR</p>
+                            <p class="text-xl md:text-2xl font-medium text-white break-words">O DRAGÃO</p>
+                            <p class="text-[#A8A8A8] mt-1 text-sm md:text-base">Jason Roux Gagnon</p>
+                            <p class="text-[10px] md:text-xs mt-3 text-[#8B0000]">DEMÔNIO DA DESTRUIÇÃO • FALECIDO</p>
+ 
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Jason Roux Gagnon ocupava o cargo de Rei Infernal e era responsável pela supervisão da parte sobrenatural da organização, sem ligação direta com as operações cotidianas da máfia. Após a traição e a transferência do título para Hunter, seu legado como Demônio da Destruição permanece disponível como recurso de poder para a atual liderança quando situações exigem intervenção de natureza infernal.</p>
+                
+                <div class="quote-box p-5 md:p-8 my-8 md:my-10 text-[#C9B89A]">
+                    <p class="text-lg md:text-xl">"A traição não é o fim. É apenas a transferência de poder para quem realmente merece carregá-lo. O trono não aceita fraqueza — apenas sangue e vontade."</p>
+                    <p class="text-right text-[10px] md:text-xs mt-4 text-[#8B0000] tracking-widest">— Hunter Krav Morozova</p>
+                </div>
+                
+                <p>A estrutura de cargos atual reflete a complementaridade entre Hunter e Jasper. Hunter define as diretrizes e utiliza o poder infernal para garantir que as decisões sejam cumpridas em todos os níveis. Jasper executa as ordens no terreno e assegura que a reputação de implacabilidade da organização seja mantida. A ausência de Jason Roux Gagnon não enfraqueceu o aspecto sobrenatural da entidade; pelo contrário, concentrou todo o poder infernal nas mãos de Hunter, reforçando a autoridade da Rainha Infernal sobre todos os ramos da organização.</p>
+            </div>
+
+            <div class="page-footer flex flex-col sm:flex-row items-center sm:justify-between pt-4 border-t border-[#2A211C] gap-2">
+                <div class="flex items-center gap-x-2">
+                    <span>ORGANIZAÇÃO KRAV</span>
+                </div>
+                <span class="cinzel tracking-[2px]">PÁGINA IX</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- RODAPÉ FINAL / FECHAMENTO -->
+    <div class="border-t border-[#2A211C] py-6 sm:py-8 md:py-10 px-3 sm:px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="text-[9px] sm:text-[10px] md:text-xs tracking-[2px] md:tracking-[4px] text-[#6B5F54]">ESTE DOCUMENTO É PROPRIEDADE EXCLUSIVA DA ORGANIZAÇÃO KRAV</p>
+            <p class="text-[8px] sm:text-[9px] md:text-[10px] text-[#4A3728] mt-1">QUALQUER REPRODUÇÃO NÃO AUTORIZADA SERÁ PUNIDA COM EXTREMA PRECISÃO</p>
+            
+            <div class="mt-4 sm:mt-6 md:mt-8 text-[7px] sm:text-[8px] md:text-[10px] text-[#6B5F54]">
+                <span class="cinzel">KRAV • MOROZOVA • BRATVA</span> • 
+                <span>EST. 1886</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent-gold', '#C5A572');
+        }
+        
+        function setupSmoothScroll() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+        
+        function addGlowEffects() {
+            const titles = document.querySelectorAll('.section-header');
+            titles.forEach(title => {
+                title.addEventListener('mouseenter', () => {
+                    title.style.textShadow = '0 0 20px rgba(139, 0, 0, 0.8), 0 0 35px rgba(139, 0, 0, 0.4)';
+                });
+                title.addEventListener('mouseleave', () => {
+                    title.style.textShadow = '0 0 15px rgba(139, 0, 0, 0.5)';
+                });
+            });
+        }
+        
+        function addKeyboardHint() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '?' && document.activeElement.tagName === 'BODY') {
+                    const toc = document.getElementById('toc');
+                    if (toc) toc.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+        
+        function init() {
+            initializeTailwind();
+            setupSmoothScroll();
+            addGlowEffects();
+            addKeyboardHint();
+            
+            const cover = document.querySelector('.leather-texture');
+            if (cover) {
+                cover.addEventListener('click', function handler(e) {
+                    if (e.target.closest('.leather-texture')) {
+                        const svg = cover.querySelector('svg');
+                        if (svg) {
+                            svg.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                            svg.style.opacity = '0.18';
+                            setTimeout(() => {
+                                if (svg) svg.style.opacity = '0.07';
+                            }, 1200);
+                        }
+                    }
+                }, { once: true });
+            }
+            
+            console.log('%c[Grimório Krav] Documento confidencial carregado com sucesso.', 'color:#6B5F54');
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>
